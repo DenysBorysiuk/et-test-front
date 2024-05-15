@@ -1,21 +1,27 @@
 import Link from 'next/link';
 
-const EventCard = ({ title, description }) => {
+const EventCard = ({ id, title, description, date, organizer }) => {
   return (
     <li className="border p-5">
-      <h2>{title}</h2>
+      <h2 className="mb-4">{title}</h2>
 
-      <p className="mb-8 text-sm">{description}</p>
+      <div className="mb-6">
+        <p className="text-sm">{description}</p>
 
-      <ul className="flex gap-24">
+        <p className="text-sm">{date.toISOString()}</p>
+
+        <p className="text-sm">{organizer}</p>
+      </div>
+
+      <ul className="flex gap-36">
         <li>
-          <Link className="text-sm text-blue-700" href="/">
+          <Link className="text-sm text-blue-700" href={`/register/${id}`}>
             Register
           </Link>
         </li>
 
         <li>
-          <Link className="text-sm text-blue-700" href="/">
+          <Link className="text-sm text-blue-700" href={`/event/${id}`}>
             View
           </Link>
         </li>
