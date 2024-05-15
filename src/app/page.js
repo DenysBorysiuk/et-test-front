@@ -13,6 +13,7 @@ const events = [
     description: 'description',
     date: new Date(),
     organizer: 'Organizer 1',
+    participants: [],
   },
   {
     id: '2',
@@ -20,6 +21,7 @@ const events = [
     description: 'description',
     date: new Date(),
     organizer: 'Organizer 2',
+    participants: [],
   },
   {
     id: '3',
@@ -27,6 +29,7 @@ const events = [
     description: 'description',
     date: new Date(),
     organizer: 'Organizer 3',
+    participants: [],
   },
   {
     id: '4',
@@ -34,6 +37,7 @@ const events = [
     description: 'description',
     date: new Date(),
     organizer: 'Organizer 4',
+    participants: [],
   },
   {
     id: '5',
@@ -41,6 +45,7 @@ const events = [
     description: 'description',
     date: new Date(),
     organizer: 'Organizer 5',
+    participants: [],
   },
   {
     id: '6',
@@ -48,6 +53,7 @@ const events = [
     description: 'description',
     date: new Date(),
     organizer: 'Organizer 6',
+    participants: [],
   },
   {
     id: '7',
@@ -55,6 +61,7 @@ const events = [
     description: 'description',
     date: new Date(),
     organizer: 'Organizer 7',
+    participants: [],
   },
   {
     id: '8',
@@ -62,6 +69,7 @@ const events = [
     description: 'description',
     date: new Date(),
     organizer: 'Organizer 8',
+    participants: [],
   },
 ];
 

@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import BackBtn from '@/components/BackBtn/BackBtn';
+import ParticipantsList from '@/components/ParticipantsList';
 
 async function fetchData(id) {
   const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
@@ -6,14 +7,27 @@ async function fetchData(id) {
   return result;
 }
 
+const participants = [
+  { fullName: 'John Doe', email: 'johndoe@gmail.com' },
+  { fullName: 'John Doe', email: 'johndoe@gmail.com' },
+  { fullName: 'John Doe', email: 'johndoe@gmail.com' },
+  { fullName: 'John Doe', email: 'johndoe@gmail.com' },
+  { fullName: 'John Doe', email: 'johndoe@gmail.com' },
+  { fullName: 'John Doe', email: 'johndoe@gmail.com' },
+  { fullName: 'John Doe', email: 'johndoe@gmail.com' },
+  { fullName: 'John Doe', email: 'johndoe@gmail.com' },
+];
+
 const Event = async ({ params: { id } }) => {
   const event = await fetchData(id);
 
   return (
-    <div className="container mx-auto">
-      <Link href="/">Back</Link>
-      <h1>Event {id} participants</h1>
-      {/* <h2 className="font-medium text-center text-[24px]">{post.title}</h2> */}
+    <div>
+      <BackBtn />
+
+      <h1 className="mb-8">Event {id} participants</h1>
+
+      <ParticipantsList participants={participants} />
     </div>
   );
 };
