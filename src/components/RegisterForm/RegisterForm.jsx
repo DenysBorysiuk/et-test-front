@@ -63,7 +63,7 @@ const RegisterForm = ({ eventId }) => {
 
       <RadioButtons register={register} errors={errors} />
 
-      <button className="mx-auto flex border py-1 px-4" type="submit">
+      <button className="mx-auto flex border py-1 px-4 anim-btn" type="submit">
         Submit
       </button>
     </form>

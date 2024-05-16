@@ -8,7 +8,7 @@ const EventCard = ({ id, title, description, date, organizer }) => {
       <div className="mb-6">
         <p className="text-sm">{description}</p>
 
-        <p className="text-sm">{date.toISOString()}</p>
+        <p className="text-sm">{date}</p>
 
         <p className="text-sm">{organizer}</p>
       </div>
