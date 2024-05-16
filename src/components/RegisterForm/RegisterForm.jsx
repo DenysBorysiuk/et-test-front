@@ -2,18 +2,10 @@
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 
-import RadioButtons from '../RadioButtons';
+import RadioButtons from '@/components/RadioButtons';
 
-const schema = yup
-  .object({
-    fullName: yup.string().required(),
-    email: yup.string().email().required(),
-    date: yup.string().required(),
-    about: yup.string().required(),
-  })
-  .required();
+import schema from './schema';
 
 const RegisterForm = ({ eventId }) => {
   const {
@@ -39,7 +31,6 @@ const RegisterForm = ({ eventId }) => {
       console.log('Form submitted successfully');
       reset();
     } else {
-      // handle error
       console.log('Error submitting form');
     }
   };
@@ -63,11 +54,11 @@ const RegisterForm = ({ eventId }) => {
       </div>
 
       <div className="flex flex-col relative">
-        <label htmlFor="date">Date of birth</label>
+        <label htmlFor="dateOfBirth">Date of birth</label>
 
-        <input className="border" {...register('date')} />
+        <input className="border" {...register('dateOfBirth')} />
 
-        <p className="field-error">{errors.date?.message}</p>
+        <p className="field-error">{errors.dateOfBirth?.message}</p>
       </div>
 
       <RadioButtons register={register} errors={errors} />
