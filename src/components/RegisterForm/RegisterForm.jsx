@@ -3,6 +3,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 import RadioButtons from '@/components/RadioButtons';
 
@@ -32,9 +33,9 @@ const RegisterForm = ({ eventId }) => {
 
       reset();
       router.push('/');
+      toast.success('Successfully registered!');
     } catch (error) {
-      console.log(error);
-      console.log('Error submitting form');
+      toast.error('Error submitting form');
     }
   };
 

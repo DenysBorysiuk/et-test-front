@@ -35,7 +35,7 @@ export default function Home() {
     };
 
     fetchItems();
-  }, [page]);
+  }, [BASE_URL, page]);
 
   useEffect(() => {
     const currentObserverRef = observerRef.current;
