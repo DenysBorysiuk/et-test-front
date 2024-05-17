@@ -1,6 +1,6 @@
 const SortBar = ({ sortKey, handleSort }) => {
   return (
-    <ul className="flex gap-4 mb-8">
+    <ul className="flex gap-4 mb-12">
       <li className="w-fit ml-auto">
         <button
           className={`${

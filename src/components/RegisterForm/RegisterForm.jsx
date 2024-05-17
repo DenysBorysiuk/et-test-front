@@ -2,6 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/navigation';
 
 import RadioButtons from '@/components/RadioButtons';
 
@@ -16,21 +17,23 @@ const RegisterForm = ({ eventId }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const router = useRouter();
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const onSubmit = async data => {
-    const response = await fetch('/api/submit-form', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ eventId, ...data }),
-    });
+    try {
+      await fetch(`${BASE_URL}/${eventId}/participants`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ...data }),
+      });
 
-    if (response.ok) {
-      console.log({ eventId, ...data });
-      console.log('Form submitted successfully');
       reset();
-    } else {
+      router.push('/');
+    } catch (error) {
+      console.log(error);
       console.log('Error submitting form');
     }
   };

@@ -1,86 +1,76 @@
+'use client';
+
+import { useState, useRef, useEffect } from 'react';
+
 import EventsList from '@/components/EventsList';
 
-async function fetchData() {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-  const result = await res.json();
-  return result;
-}
+export default function Home() {
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
+  const observerRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-const events = [
-  {
-    id: '1',
-    title: 'Title1',
-    description: 'description',
-    date: '20.10.2020',
-    organizer: 'Organizer 8',
-    participants: [],
-  },
-  {
-    id: '2',
-    title: 'Title2',
-    description: 'description',
-    date: '21.12.2019',
-    organizer: 'Organizer 7',
-    participants: [],
-  },
-  {
-    id: '3',
-    title: 'Title3',
-    description: 'description',
-    date: '20.11.2015',
-    organizer: 'Organizer 6',
-    participants: [],
-  },
-  {
-    id: '4',
-    title: 'Title4',
-    description: 'description',
-    date: '20.12.2017',
-    organizer: 'Organizer 5',
-    participants: [],
-  },
-  {
-    id: '5',
-    title: 'Title5',
-    description: 'description',
-    date: '31.12.2015',
-    organizer: 'Organizer 4',
-    participants: [],
-  },
-  {
-    id: '6',
-    title: 'Title6',
-    description: 'description',
-    date: '19.12.2015',
-    organizer: 'Organizer 3',
-    participants: [],
-  },
-  {
-    id: '7',
-    title: 'Title7',
-    description: 'description',
-    date: '17.12.2015',
-    organizer: 'Organizer 2',
-    participants: [],
-  },
-  {
-    id: '8',
-    title: 'Title8',
-    description: 'description',
-    date: '14.12.2015',
-    organizer: 'Organizer 1',
-    participants: [],
-  },
-];
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-export default async function Home() {
-  const posts = await fetchData();
+    const fetchItems = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(`${BASE_URL}?page=${page}`, { signal });
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+
+        setItems(prevItems => [...prevItems, ...data]);
+        setHasMore(data.length > 0);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+
+      return () => controller.abort();
+    };
+
+    fetchItems();
+  }, [page]);
+
+  useEffect(() => {
+    const currentObserverRef = observerRef.current;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting && !isLoading && hasMore) {
+          setPage(prevPage => prevPage + 1);
+        }
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1.0,
+      }
+    );
+
+    if (currentObserverRef) {
+      observer.observe(currentObserverRef);
+    }
+
+    return () => {
+      if (currentObserverRef) {
+        observer.unobserve(currentObserverRef);
+      }
+    };
+  }, [hasMore, isLoading]);
 
   return (
-    <section className="py-8">
-      <h1 className="text-4xl mb-6">Events</h1>
+    <section className="py-16">
+      <h1 className="text-4xl mb-8">Events</h1>
 
-      <EventsList events={events} />
+      <EventsList events={items} />
+
+      <div ref={observerRef} style={{ height: '20px' }}></div>
     </section>
   );
 }

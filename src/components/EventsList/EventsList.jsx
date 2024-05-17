@@ -1,16 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import EventCard from '@/components/EventCard';
 import SortBar from '@/components/SortBar';
 
 const EventsList = ({ events }) => {
-  const [sortedEvents, setSortedEvents] = useState(events);
+  const [sortedEvents, setSortedEvents] = useState([]);
   const [sortKey, setSortKey] = useState('title');
 
-  const sortEvents = key => {
-    let sortedArray = [...sortedEvents];
+  const sortEvents = (events, key) => {
+    let sortedArray = [...events];
     if (key === 'date') {
       sortedArray.sort(
         (a, b) =>
@@ -20,19 +20,18 @@ const EventsList = ({ events }) => {
     } else {
       sortedArray.sort((a, b) => a[key].localeCompare(b[key]));
     }
-    setSortedEvents(sortedArray);
+    return sortedArray;
   };
 
-  const handleSort = key => {
-    setSortKey(key);
-    sortEvents(key);
-  };
+  useEffect(() => {
+    setSortedEvents(sortEvents(events, sortKey));
+  }, [events, sortKey]);
 
   return (
     <>
-      <SortBar sortKey={sortKey} handleSort={handleSort} />
+      <SortBar sortKey={sortKey} handleSort={setSortKey} />
 
-      <ul className="flex flex-wrap gap-12">
+      <ul className="flex flex-wrap gap-12 mb-8">
         {sortedEvents.map((event, idx) => (
           <EventCard key={idx} {...event} />
         ))}

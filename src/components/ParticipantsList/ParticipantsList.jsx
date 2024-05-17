@@ -28,9 +28,9 @@ const ParticipantsList = ({ participants }) => {
 
       <ul className="flex flex-wrap gap-8">
         {visibleParticipants.map(({ fullName, email }, idx) => (
-          <li className="border p-4" key={idx}>
-            <p>{fullName}</p>
-            <p>{email}</p>
+          <li className="border p-4 w-60" key={idx}>
+            <p className="text-xs">{fullName}</p>
+            <p className="text-xs">{email}</p>
           </li>
         ))}
       </ul>
